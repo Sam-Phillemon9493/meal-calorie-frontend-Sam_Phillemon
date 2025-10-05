@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { formatDate } from '@/lib/utils/date';
 import Link from 'next/link';
-import { PlusCircle, History, TrendingUp, Search, X, CloudCog } from 'lucide-react';
+import { PlusCircle, History, TrendingUp, Search, X } from 'lucide-react';
 import { ROUTES } from '@/lib/constants';
 
 export default function DashboardContent() {

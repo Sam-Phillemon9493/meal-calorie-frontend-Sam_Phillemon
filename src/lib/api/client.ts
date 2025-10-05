@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { API_CONFIG, ROUTES } from '@/lib/constants';
+import { API_CONFIG } from '@/lib/constants';
 import { ApiError } from '@/types/auth';
 
 export const apiClient = axios.create({
