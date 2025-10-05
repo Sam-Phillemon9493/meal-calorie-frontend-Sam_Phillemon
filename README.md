@@ -13,7 +13,7 @@ A production-ready Next.js application for tracking meal calories using the USDA
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS + shadcn/ui
 - **State Management**: Zustand
@@ -30,69 +30,71 @@ A production-ready Next.js application for tracking meal calories using the USDA
 ### Installation
 
 1. Clone the repository:
-
+```
 git clone <your-repo-url>
-cd meal-calorie-fe
-
+cd <your-repo-name>
+```
 
 2. Install dependencies:
-npm install
+`pnpm install`
 
 
 3. Create `.env.local` file:
-cp .env.example .env.local
+`cp .env.example .env.local`
 
 
 4. Update the backend URL in `.env.local`:
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+```
+NEXT_PUBLIC_API_BASE_URL=https://flybackend-misty-feather-6458.fly.dev
+```
+
+6. Run the development server:
+
+```pnpm run dev```
 
 
-5. Run the development server:
+6. Open ```[http://localhost:3000](http://localhost:3000)```
 
-pnpm run dev
+## High Level Project Structure
 
-
-6. Open [http://localhost:3000](http://localhost:3000)
-
-## Project Structure
-
-├── app/ # Next.js App Router pages
-├── components/ # Reusable React components
-├── lib/ # Utility functions and API calls
-├── stores/ # Zustand state stores
-├── types/ # TypeScript type definitions
-└── public/ # Static assets
-
-
-## Key Design Decisions
-
-### Authentication
-- JWT tokens stored in localStorage via Zustand persist
-- Axios interceptors for automatic token injection
-- Route guards using custom `useAuthGuard` hook
-
-### State Management
-- Zustand for auth state and meal history
-- Persisted to localStorage for session continuity
-- Keeps last 10 meal searches in history
-
-### Form Validation
-- Zod schemas for runtime type validation
-- React Hook Form for form state management
-- Client-side validation with user-friendly error messages
-
-### UI/UX
-- Mobile-first responsive design
-- Loading states and error handling
-- Dark/light mode support
-- Accessible components via shadcn/ui
+```
+app/
+├── layout.tsx                    
+├── page.tsx                    
+├── (auth)/                     
+│   ├── login/
+│   │   └── page.tsx           
+│   └── register/
+│       └── page.tsx            
+└── (protected)/              
+    ├── dashboard/
+    │   └── page.tsx            
+    └── calories/
+        └── page.tsx
+components/
+├── auth/
+│   ├── LoginForm.tsx           
+│   └── RegisterForm.tsx         
+├── calories/
+│   ├── MealForm.tsx             
+│   ├── ResultCard.tsx           
+│   └── MealHistory.tsx          
+├── dashboard/
+│   └── DashboardContent.tsx     
+├── providers/
+│   └── AuthProvider.tsx
+|   |__ ThemeProvider.tsx 
+├── layout/
+    ├── Navbar.tsx              
+    └── ThemeToggle.tsx         
+```
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
+- `pnpm run dev` - Start development server
+- `pnpm run build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm run lint` - Run ESLint
 
 ## Deployment
 
