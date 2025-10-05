@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { MealHistory } from '@/types';
+import { MEAL_HISTORY_LIMIT } from '@/lib/constants';
+import { MealHistory } from '@/types/meal';
 
 interface MealState {
     history: MealHistory[];
@@ -17,10 +18,10 @@ export const useMealStore = create<MealState>()(
             currentResult: null,
             addToHistory: (meal) =>
                 set((state) => ({
-                    history: [meal, ...state.history].slice(0, 10), // Keep last 10
+                    history: [meal, ...state.history].slice(0, MEAL_HISTORY_LIMIT),
                 })),
             setCurrentResult: (result) => set({ currentResult: result }),
-            clearHistory: () => set({ history: [] }),
+            clearHistory: () => set({ history: [], currentResult: null }),
         }),
         {
             name: 'meal-storage',
