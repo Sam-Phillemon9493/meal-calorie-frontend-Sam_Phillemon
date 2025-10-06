@@ -53,17 +53,34 @@ export default function RegisterForm() {
             console.error('Registration error:', err);
             const apiError = err as ApiError;
 
-            toast.error('Registration Failed', {
-                description: apiError.message || 'Please check your information and try again.',
+            let errorTitle = 'Registration Failed';
+            let errorDescription = 'Please check your information and try again.';
+
+            if (apiError.message) {
+                if (apiError.message.toLowerCase().includes('email already in use')) {
+                    errorTitle = 'Email Already Registered';
+                    errorDescription = 'This email is already associated with an account. Try logging in instead.';
+                } else if (apiError.message.toLowerCase().includes('email')) {
+                    errorTitle = 'Invalid Email';
+                    errorDescription = apiError.message;
+                } else if (apiError.message.toLowerCase().includes('password')) {
+                    errorTitle = 'Invalid Password';
+                    errorDescription = apiError.message;
+                } else {
+                    errorDescription = apiError.message;
+                }
+            }
+
+            toast.error(errorTitle, {
+                description: errorDescription,
             });
         } finally {
             setLoading(false);
         }
     };
 
-
     return (
-        <Card className="w-full border-2">
+        <Card className="w-full border-2 select-none">
             <CardHeader className="space-y-1 pb-4">
                 <CardTitle className="text-2xl">Create Account</CardTitle>
                 <CardDescription>Sign up to start tracking your meals</CardDescription>
@@ -138,7 +155,7 @@ export default function RegisterForm() {
                         )}
                     </div>
 
-                    <Button type="submit" className="w-full h-9 mt-4 cursor-pointer" disabled={loading}>
+                    <Button type="submit" className="w-full h-9 mt-4" disabled={loading}>
                         {loading ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

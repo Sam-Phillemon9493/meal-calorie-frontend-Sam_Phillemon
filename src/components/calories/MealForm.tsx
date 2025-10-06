@@ -71,19 +71,25 @@ export default function MealForm({ onLoadingChange, onError }: MealFormProps) {
             console.error('Calorie fetch error:', err);
 
             const apiError = err as ApiError;
+            let errorTitle = 'Search Failed';
             let errorMessage = 'Failed to fetch calorie data. Please try again.';
 
-            if (apiError.status === 404) {
-                errorMessage = 'Dish not found. Try a different name or check the spelling.';
-            } else if (apiError.status === 400) {
-                errorMessage = apiError.message || 'Invalid input. Please check your data.';
-            } else if (apiError.status === 401) {
-                errorMessage = 'Session expired. Please login again.';
-            } else if (apiError.message) {
-                errorMessage = apiError.message;
+            if (apiError.message) {
+                if (apiError.status === 404) {
+                    errorTitle = 'Dish Not Found';
+                    errorMessage = 'We couldn\'t find that dish. Try a different name or check the spelling.';
+                } else if (apiError.status === 400) {
+                    errorTitle = 'Invalid Input';
+                    errorMessage = apiError.message || 'Please check your input and try again.';
+                } else if (apiError.status === 401) {
+                    errorTitle = 'Session Expired';
+                    errorMessage = 'Please log in again to continue.';
+                } else {
+                    errorMessage = apiError.message;
+                }
             }
 
-            toast.error('Search Failed', {
+            toast.error(errorTitle, {
                 description: errorMessage,
             });
 

@@ -38,6 +38,7 @@ export default function LoginForm() {
 
     const onSubmit = async (data: LoginFormData) => {
         setLoading(true);
+
         try {
             localStorage.removeItem('meal-storage');
 
@@ -52,8 +53,24 @@ export default function LoginForm() {
             console.error('Login error:', err);
             const apiError = err as ApiError;
 
-            toast.error('Login Failed', {
-                description: apiError.message || 'Please check your credentials and try again.',
+            let errorTitle = 'Login Failed';
+            let errorDescription = 'Please check your credentials and try again.';
+
+            if (apiError.message) {
+                if (apiError.message.toLowerCase().includes('invalid credentials') ||
+                    apiError.message.toLowerCase().includes('incorrect')) {
+                    errorTitle = 'Invalid Credentials';
+                    errorDescription = 'The email or password you entered is incorrect.';
+                } else if (apiError.message.toLowerCase().includes('not found')) {
+                    errorTitle = 'Account Not Found';
+                    errorDescription = 'No account exists with this email. Please sign up first.';
+                } else {
+                    errorDescription = apiError.message;
+                }
+            }
+
+            toast.error(errorTitle, {
+                description: errorDescription,
             });
 
             if (apiError.status === 401) {
