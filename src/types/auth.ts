@@ -34,5 +34,5 @@ export interface AuthResponse {
 export interface ApiError {
     message: string;
     status?: number;
-    errors?: string[];
+    errors?: Record<string, string[]>;
 }

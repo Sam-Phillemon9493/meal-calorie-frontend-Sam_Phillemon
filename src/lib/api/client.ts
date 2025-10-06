@@ -2,6 +2,13 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { API_CONFIG } from '@/lib/constants';
 import { ApiError } from '@/types/auth';
 
+interface BackendErrorResponse {
+    error?: string;
+    message?: string;
+    errors?: Record<string, string[]>;
+}
+
+
 export const apiClient = axios.create({
     baseURL: API_CONFIG.BASE_URL,
     timeout: API_CONFIG.TIMEOUT,
@@ -32,7 +39,7 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
     (response) => response,
-    (error: AxiosError<any>) => {
+    (error: AxiosError<BackendErrorResponse>) => {
         const apiError: ApiError = {
             message:
                 error.response?.data?.error ||
