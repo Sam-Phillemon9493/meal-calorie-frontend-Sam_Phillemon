@@ -106,11 +106,12 @@ Set environment variables in Vercel dashboard:
 
 ## Screenshots
 
-[Add screenshots here]
+https://github.com/user-attachments/assets/2ade5ec8-b36b-410b-9406-ce6a91b9ab0f
+
 
 ## Live Demo
 
-[Add deployed URL here]
+https://meal-calorie-frontend-sam-phillemon.vercel.app/
 
 ## Future Enhancements
 
